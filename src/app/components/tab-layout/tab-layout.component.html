@@ -1,0 +1,21 @@
+<div class="card_coloured" [ngClass]="{'card': tab_layout_ui_data_to_receive.need_card}">
+  <div class="card-header ">
+    <h4 class="card-title"> {{tab_layout_ui_data_to_receive.tab_heading}}
+      <small class="description">{{tab_layout_ui_data_to_receive.tab_subheading}}</small>
+    </h4>
+  </div>
+  <div class="card-body ">
+    <ul class="nav nav-pills nav-pills-primary" role="tablist">
+      <li class="nav-item" *ngFor="let element of tab_layout_ui_data_to_receive.tab_content_component_selector_data; let i = index" [attr.data-index]="i">
+        <a class="nav-link" [ngClass]="{'active': element.is_active == true}" data-toggle="tab" href="#link{{i+1}}" [id]="tab_layout_ui_data_to_receive.tab_id + '_' + (i + 1)" role="tablist" >
+        {{element.tab_name}}
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content tab-space">
+
+      <ng-container *ngTemplateOutlet="layoutTemplate;"></ng-container>
+
+    </div>
+  </div>
+</div>

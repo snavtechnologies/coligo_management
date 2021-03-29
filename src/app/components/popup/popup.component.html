@@ -1,0 +1,15 @@
+<div class="modal fade" [id]="popup_id" role="dialog" tabindex='-1' #scrollMe [scrollTop]="scrollMe.scrollHeight" >
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div style="border: 3px solid lightblue;" class="modal-body">Press ESC to Close
+          <div style="background-color: #F2F7FF;" class="card">
+            <!-- <div class="card-body"> -->
+              <div class="col-md-12">
+                 <ng-container *ngTemplateOutlet="layoutTemplate;"></ng-container>        
+              </div>
+            <!-- </div> -->
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

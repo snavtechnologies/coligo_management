@@ -1,0 +1,1 @@
+sequelize-auto -o backend/models/models_reference -d %2 -h localhost -u root -p 3306 -e mysql -t %1 -a backend/models/json_models/all_table_prop.json

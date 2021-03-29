@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <style>
+  </style>
+<head>
+    <base href='/'>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <tag spellcheck="false"/>
+    <title>Coligo v 3.01</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <!--     Fonts and icons     -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+    <script src="./assets/jquery.tabletojson.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+
+<body style="overflow-y: hidden;overflow-x: hidden;" class="sidebar-mini">
+    <app-my-app>
+        <div class="loader">
+          <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+        </div>
+    </app-my-app>
+    <script src="./assets/jquery.tabletojson.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>             
+      function val_to_text(str, box, dropdown, btn) {
+        document.getElementById(dropdown).style.display = 'none';
+        $('#' + box).val(str);
+        $('#' + btn).prop('disabled', false);
+      }
+      function print_receipt(id,db_name)
+      {
+       
+       $.post("http://localhost/coligo_management_suite/backend/nace_fin_rest_php/print_receipt.php?p=1",{id:id,db_name:db_name}, function(html){ 
+        
+          newWin= window.open("");
+          newWin.document.write(html);
+          newWin.print();
+          newWin.close();
+        });
+      
+       
+      }
+    </script>
+</body>
+
+</html>

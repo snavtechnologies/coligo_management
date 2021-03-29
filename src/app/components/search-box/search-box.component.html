@@ -1,0 +1,9 @@
+<form (submit)="toggleSubmit(toggleForm)" #toggleForm="ngForm">
+        <input #val_text class="form-control" type="text" autocomplete="off" [placeholder]="search_box.placeholder" (keyup)="drop_down(val_text.value)" [name]="search_box.searchbox_id" [id]="search_box.searchbox_id" (click)="drop_down_show('block')" (mouseout)="drop_down_show('none')">
+        <div style="max-height:200px; position:absolute; min-height:10px;width:75%; cursor: pointer; overflow:auto;z-index: 1000; float:left;background:#FFFFFF;color:#000; text-align:left;display:none; box-shadow:#000 1px 1px 1px;-webkit-box-shadow:#ccc 3px 3px 3px;" [id]="dropdown_id" (mouseover)="drop_down_show('block')" (mouseout)="drop_down_show('none')">&nbsp;
+                <img height="80" width="80" src='../../../assets/img/loading_dropdown.gif' />
+        </div>
+        <button [disabled]="true" [id]="searchbtn_id" class="btn btn-flat" style="margin-left:100%;margin-top: -60px;" [name]="searchbtn_id" type="submit" >
+        <i class="fa fa-search"></i> 
+        </button> 
+</form>

@@ -1,0 +1,18 @@
+.nav_tech_label {
+ color: #003366;
+ margin-left: 21px;
+}
+mat-card {
+  padding: 5px;
+  margin-right: 14.5px;
+  margin-left: 14.5px;
+}
+.just_nav_name {
+  margin-left: 5px;
+  
+}
+
+.logout_btn {
+  margin-left: 14.5px;
+  margin-right: 14.5px;
+}

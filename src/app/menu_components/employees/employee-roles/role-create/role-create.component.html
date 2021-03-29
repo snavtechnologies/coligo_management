@@ -1,0 +1,31 @@
+  <p mat-dialog-title>{{title}}</p>
+  
+   <app-html-components
+    [html_data_to_pass]="isNewRole ? roleAddElements : roleEditElements "
+    [form_data]="this.form" 
+    [formGroup]="this.form">
+
+    <ng-template #standardTemplate let-item>
+      <div *ngIf="item=='linkHead'"> 
+        <div style="margin-top: 10px">  
+          <mat-form-field class="margin">
+            <mat-select 
+             id="linkHead" 
+             placeholder="Select Role"
+             formControlName="linkHead"  
+             matInput required="true"
+             (selectionChange)="namesLinkHead = $event.source.triggerValue">
+             <mat-option  class="options"  *ngFor = "let role of dialogData.roles index as i"  [value]="role.link">{{role.namesLink}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </ng-template>
+
+   </app-html-components>
+   <mat-dialog-actions>
+    <button id="addBtn" (click)="onClickAdd()" type="button" name="addBtn" style="width: 100%;margin-top: 2%" class="col-md-12 btn btn-primary btn-lg"  mat-raised-button>{{buttonText}}</button>
+   </mat-dialog-actions>
+  
+  
+

@@ -1,0 +1,35 @@
+<div id="top"></div>
+<mat-card>
+  
+
+  <ul class="nav nav-pills nav-pills-primary" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link" role="tablist" [ngClass]="{'active': true}" (click)="openDialog()" type="button" name="add_role_btn"   mat-raised-button>Add Role</a>
+    </li>
+  </ul>
+<div class="row">
+  <ng-template>
+    <mat-form-field><mat-label>
+      <input matInput placeholder="search for me" />
+    </mat-label></mat-form-field>
+  </ng-template>
+</div>
+ 
+  
+  <app-table [table_data] = "table_data_to_send">
+    <ng-template>
+      <tr 
+        class="table-row" 
+        (mouseover)="changeCursorStyle(role.name)" 
+        [ngStyle]="{'cursor': cursorStyle}"
+        (click)="openDialog(role)" 
+        *ngFor = "let role of roles index as i">
+        <td>{{i+1}}</td><td>{{role.name}}</td><td>{{role.namesLink}}</td>   
+      </tr>
+    </ng-template>
+  </app-table>
+</mat-card>
+
+
+<button type="button" (click)="scrollToTop()" id="go-to-top-btn"  class="mat-raised-button btn">Go To Top</button>
+<div id="bottom"></div>

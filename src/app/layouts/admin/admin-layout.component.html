@@ -1,0 +1,21 @@
+<app-lockscreen></app-lockscreen>
+
+<div style="background-color: #D5DAE6" class="wrapper">
+
+    <div class="sidebar" data-color="white" data-background-color="blue" data-image="./assets/img/sidebar-1.jpg">
+        <app-sidebar-cmp></app-sidebar-cmp>
+        <div class="sidebar-background" ></div>
+    </div>
+    <div class="main-panel">
+    <app-navbar-cmp></app-navbar-cmp>
+    <div class="main-content">
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+        <!-- <div *ngIf="!isMap()">
+            <app-footer-cmp></app-footer-cmp>
+        </div> -->
+    </div>
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+</div>

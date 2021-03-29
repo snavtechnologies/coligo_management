@@ -1,0 +1,35 @@
+ <!-- re-usable login form -->
+ 
+ <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
+
+  <mat-card>
+    <mat-card-title><h3 class="mat-headline">{{login_form_ui_data.title}}</h3></mat-card-title>
+    <mat-card-content>
+  <div class="card card-login">
+
+      <form (submit)="onLogin(loginForm)" #loginForm="ngForm">
+
+    <div class="card-body ">
+          <mat-form-field class="inp_bottom_margin">
+              <input matInput ngModel #username="ngModel" required type="text" name="username" [placeholder]="login_form_ui_data.field1_placeholder">
+              <mat-error *ngIf="username.invalid">Please enter a valid {{login_form_ui_data.field1_placeholder}}</mat-error>
+             </mat-form-field>
+             <mat-form-field class="inp_bottom_margin">
+                <input matInput ngModel #password="ngModel" required type="password" name="password" [placeholder]="login_form_ui_data.field2_placeholder">
+                <mat-error *ngIf="password.invalid">Please enter a valid {{login_form_ui_data.field2_placeholder}}</mat-error>
+              </mat-form-field>
+
+
+    </div>
+    <div class="auth card-footer justify-content-center">
+        <button id="login_btn" [disabled]="is_disabled" class="btn btn-primary" mat-raised-button type="submit" >{{login_form_ui_data.button_text}}</button>
+    </div>
+  </form>
+ 
+
+  </div>
+</mat-card-content>
+
+</mat-card>
+</div>
+<!-- re-usable login form -->

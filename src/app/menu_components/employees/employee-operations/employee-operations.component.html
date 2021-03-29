@@ -1,0 +1,398 @@
+<div id="top"></div>
+<app-tab-layout [tab_layout_ui_data_to_receive]="tab_layout_ui_data_to_send">
+  <ng-template >
+   
+    <div class="tab-pane active" id="link1">
+      <div class="row">
+        <div class="col-md-4">
+          <p>
+            <mat-button-toggle-group id="toggle_btn" value="1" style="background-color: whitesmoke; margin-left: 4%" name="fontStyle"
+              aria-label="Font Style">
+              <mat-button-toggle value="1" (change)="onToggle($event.value, 0)" ><b>View/Edit Employees</b></mat-button-toggle>
+              <mat-button-toggle value="0" (change)="onToggle($event.value, 0)"><b>New Employees</b></mat-button-toggle>
+            </mat-button-toggle-group>
+          </p>
+        </div>
+
+        <div *ngIf="switch_tab == 1" class="col-md-4 ml-auto mr-auto">
+          <app-search-box [search_box]="search_box" (fn_on_search)="fn_on_search($event)"></app-search-box>
+        </div>
+
+        <div *ngIf="switch_tab == 1" class="col-md-1 ml-auto mr-auto" >
+                       
+          <span class="emp_image">
+                  <img ngClass="emp_new_image" alt= "User image here" src="http://localhost/coligo_management_suite/backend/images/{{emp_image}}"  height="100px" width="100px">
+          </span>
+        </div>
+        
+
+      </div>
+          
+            <form
+             [formGroup]="NewEmployeesForm" 
+             (ngSubmit)="form_submit(formDirective)"
+             #formDirective="ngForm" 
+             [ngStyle]="{ 'background-color': this.color }">
+              <app-html-components
+               [html_data_to_pass]="employees_New_html_elements"
+               [form_data]="this.NewEmployeesForm" 
+               (html_events)="get_html_events($event)">
+                <ng-template #standardTemplate let-item>
+
+                  <div>
+                    <span *ngIf="item == 'emp_new_custom_element_date'">
+                      <div class="input-group emp_new_date_group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">date_range</i>
+                          </span>
+                        </div>
+                        <input required="false" readonly="true" type="text" class="form-control kyc_reg_date"
+                          name="emp_new_date" formControlName="emp_new_date" />
+                      </div>
+                    </span>
+
+                    <div *ngIf="item=='role_hierarchy'"> 
+                      <div style="margin-top: 10px">  
+                        <mat-form-field class="margin">
+                          <mat-select
+                           id="role_hierarchy"
+                           formControlName="role_hierarchy" 
+                           placeholder="Select Role Hierarchy"  
+                           matInput
+                           (selectionChange)="selectedRole = idsToPropertiesMap[$event.value]">
+                            <mat-option  class="options" *ngFor = "let role of roles index as i" [value]="role.id">{{role.namesLink}} </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <span *ngIf="item == 'emp_new_custom_element_role'">
+                      <mat-form-field>
+                        <textarea class="role-name"
+                          id="role-name"
+                          matInput
+                          name="emp_new_role"
+                          required="false" 
+                          readonly="true" 
+                          type="text"
+                          placeholder="Role Name" 
+                          [(ngModel)]="selectedRole.name"
+                          formControlName="emp_new_role">
+                        </textarea>
+                      </mat-form-field>
+                    </span>
+
+                    <span *ngIf="item == 'emp_new_custom_dob'">
+                      <mat-form-field>
+                        <div style="margin-top: 10px">
+                          <input
+                           placeholder="DD/MM/YYYY" 
+                           class="date_mask" 
+                           formControlName="emp_new_dob" 
+                           matInput required="true" 
+                           type="text" 
+                           (blur)="dobcheck()"
+                           />
+                        </div>
+                      </mat-form-field>
+                    </span>
+
+                    <span *ngIf="item == 'emp_new_custom_element_id_1'">
+                      <div class="input-group emp_new_id_1_select_group">
+                        <div class="input-group-prepend">
+                          <span class="emp_new_id_select">
+                            <app-html-components
+                             [html_data_to_pass]="emp_new_custom_element_id_1_select_dropdown_data" 
+                             [form_data]="this.NewEmployeesForm"
+                             (html_events)="get_html_events_id($event, '1')">
+                            </app-html-components>
+                          </span>
+                        </div>
+                        <app-html-components
+                         *ngIf="this.NewEmployeesForm.get('emp_new_id_1_select_dropdown').value === '3'" 
+                         [html_data_to_pass] = "emp_new_custom_element_id_1_select_value_data_extra" 
+                         [form_data]="this.NewEmployeesForm" 
+                         (html_events)="get_html_events_id($event, '1')">
+                        </app-html-components>
+                        <app-html-components
+                         [html_data_to_pass]="emp_new_custom_element_id_1_select_value_data" 
+                         [form_data]="this.NewEmployeesForm"
+                         (html_events)="get_html_events_id($event, '1')">
+                        </app-html-components>
+                      </div>
+                    </span>
+
+                    <span *ngIf="item == 'emp_new_custom_element_id_2'">
+                      <div class="input-group emp_new_id_2_select_group">
+                        <div class="input-group-prepend">
+                          <span class="emp_new_id_select">
+                            <app-html-components
+                             [html_data_to_pass]="emp_new_custom_element_id_2_select_dropdown_data" 
+                             [form_data]="this.NewEmployeesForm"
+                             (html_events)="get_html_events_id($event, '2')">
+                            </app-html-components>
+                          </span>
+                        </div>
+                        <app-html-components
+                         *ngIf="this.NewEmployeesForm.get('emp_new_id_2_select_dropdown').value === '3'" 
+                         [html_data_to_pass] = "emp_new_custom_element_id_2_select_value_data_extra" 
+                         [form_data]="this.NewEmployeesForm" 
+                         (html_events)="get_html_events_id($event, '2')">
+                        </app-html-components>
+                        <app-html-components
+                         [html_data_to_pass]="emp_new_custom_element_id_2_select_value_data" 
+                         [form_data]="this.NewEmployeesForm"
+                         (html_events)="get_html_events_id($event, '2')">
+                        </app-html-components>
+                      </div>
+                    </span>
+
+                    <span *ngIf="item=='emp_new_custom_element_contact_1'">
+                      <div class="input-group emp_new_custom_contact_select_group">
+                        <div class="input-group-prepend">
+                          <span class="emp_new_contact_type_select">
+                            <app-html-components
+                             [html_data_to_pass] = "emp_new_custom_element_contact_1_select_dropdown_data" 
+                             [form_data]="this.NewEmployeesForm"
+                             (html_events)="get_html_events_contact($event, '1')">
+                            </app-html-components>
+                          </span>                          
+                        </div>
+                        <app-html-components
+                         [html_data_to_pass] = "emp_new_custom_element_contact_1_select_value_data" 
+                         [form_data]="this.NewEmployeesForm"
+                         (html_events)="get_html_events_contact($event, '1')"
+                         ></app-html-components>
+                      </div>
+                    </span>
+
+                    <span *ngIf="item=='emp_new_custom_element_contact_2'">
+                      <div class="input-group emp_new_custom_contact_select_group">
+                        <div class="input-group-prepend">
+                          <span class="emp_new_contact_type_select">
+                            <app-html-components
+                             [html_data_to_pass] = "emp_new_custom_element_contact_2_select_dropdown_data" 
+                             [form_data]="this.NewEmployeesForm"
+                             (html_events)="get_html_events_contact($event, '2')">
+                            </app-html-components>
+                          </span>                          
+                        </div>
+                        <app-html-components
+                         [html_data_to_pass] = "emp_new_custom_element_contact_2_select_value_data" 
+                         [form_data]="this.NewEmployeesForm"
+                         (html_events)="get_html_events_contact($event, '2')"></app-html-components>
+                      </div>
+                    </span>
+
+                    <span *ngIf="item=='emp_new_custom_element_contact_3'">
+                      <div class="input-group kyc_reg_tel_type__select_group">
+                        <div class="input-group-prepend">
+                          <span class="emp_new_contact_type_select">
+                            <app-html-components
+                             [html_data_to_pass] = "emp_new_custom_element_contact_3_select_dropdown_data" 
+                             [form_data]="this.NewEmployeesForm"
+                             (html_events)="get_html_events_contact($event, '3')">
+                            </app-html-components>
+                          </span>                          
+                        </div>
+                        <app-html-components
+                         [html_data_to_pass] = "emp_new_custom_element_contact_3_select_value_data" 
+                         [form_data]="this.NewEmployeesForm"
+                         (html_events)="get_html_events_contact($event, '3')">
+                        </app-html-components>
+                      </div>
+                    </span>
+
+                    <div *ngIf="item=='emp_new_custom_element_area_permanent'"> 
+                      <div style="margin-top: 10px">  
+                        <mat-form-field class="margin">
+                          <mat-select
+                           id="area_permanent"
+                           formControlName="emp_new_area_permanent" 
+                           placeholder="Select Area"  
+                           matInput required="false" 
+                           (selectionChange)="get_pincode_details('permanent')">
+                           
+                            <mat-option  *ngFor = "let pinData of pincode_details_permanent index as i" [value]="i+'~'+pinData.Name">{{pinData.Name}} </mat-option>
+                          
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <span *ngIf="item=='emp_new_custom_element_address_present'">        
+                      <app-html-components [html_data_to_pass] = "emp_new_custom_element_present_address" [form_data]="this.NewEmployeesForm"></app-html-components>
+                      <label style="margin-left: 20px;" class="form-check-label">
+                        <input (change)="give_same_address($event)" class="form-check-input" type="checkbox" value=""> 
+                          <span style="color: lightcoral">Present address same as permanent address</span>
+                          <span class="form-check-sign">
+                          <span class="check"></span>
+                        </span>     
+                      </label> 
+                    </span>
+
+                    <span *ngIf="item=='emp_new_custom_element_area_present'"> 
+                      <div style="margin-top: 10px">  
+                        <mat-form-field class="margin">
+                          <mat-select
+                           formControlName="emp_new_area_present" 
+                           placeholder="Select Area"  
+                           matInput required="false"
+                           (selectionChange)="get_pincode_details('present')">
+                            <mat-option *ngFor = "let pinData of pincode_details_present index as i" [value]="i+'~'+pinData.Name">{{pinData.Name}} </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                  </span>
+                  </div>
+                </ng-template>
+              </app-html-components>
+
+              <button style="float: right" type="button" (click)="find_invalid()" class="btn"><b>Validate Form</b></button>
+              <button name="submit_btn" style="width: 100%;margin-top: 2%" class="col-md-12 btn btn-primary btn-lg"  mat-raised-button type="submit">Submit Information</button> 
+
+            </form>
+    </div>
+
+
+
+    <div class="tab-pane" id="link2">
+      <app-table [table_data] = "table_data_to_send">
+        <ng-template>
+          <tr *ngFor = "let d of employeeData index as i">
+            <td>{{i+1}}</td>
+            <td>
+              <button type="button" (click)="send_tab(1, d.id)" class="btn btn-sm">View</button><br>
+              <button type="button" (click)="send_tab(2, d.id)" class="btn btn-sm">Send SMS</button><br>
+              <button type="button" (click)="send_tab(3, d.id)" class="btn btn-sm">Send Email</button><br>
+              <button type="button" (click)="send_tab(4, d.id)" class="btn btn-sm">Issue kit</button><br>
+            </td>
+
+            <td>{{d.date}}</td> <td>{{d.branch_name}}</td> <td>{{d.id}}</td> 
+            <td>{{d.emp_first_name+' '}}{{d.emp_middle_name+' '}}{{ d.emp_last_name}}</td> 
+            <td>{{d.present_address}}</td> <td>{{d.permanent_address}}</td> <td>{{d.email}}</td> 
+            <td>{{d.contact1_value}}</td> <td>{{d.contact2_value}}</td> 
+            <td>{{d.dob}}</td> <td>{{d.pan_card}}</td> <td>aadhar: {{d.aadhar}}</td>
+            
+          </tr>
+        </ng-template>
+      </app-table>
+
+    </div>
+
+
+
+    <div class="tab-pane" id="link3">
+      <div class="row">
+
+        <div class="form-group col-md-5">
+          <mat-card>
+            <form>
+              <app-html-components
+               [html_data_to_pass] = "send_sms_html_elements" 
+               [form_data]="this.send_sms"
+               (html_events)="get_html_events($event)">
+              </app-html-components>
+              <button class="btn btn-primary">SEND SMS</button>
+            </form>
+          </mat-card>
+        </div>
+
+        <div class="form-group col-md-7">
+          <mat-card>
+            <form>
+              <app-html-components 
+               [html_data_to_pass] = "send_email_html_elements"
+               [form_data]="this.send_email"
+               (html_events) = "get_html_events($event)">
+              </app-html-components>
+              <button class="btn btn-primary">SEND EMAIL</button>
+            </form>
+          </mat-card>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="tab-pane" id="link4">
+      <mat-card class="card-credentials">
+        <form
+         [formGroup]="employeeCredentialsForm"
+         (ngSubmit)="credential_submit()"
+         #formDirective = "ngForm"
+         [ngStyle]="{ 'background-color': this.color }">
+
+          <app-html-components
+           [html_data_to_pass] = "is_credentials_readonly ? employee_keys_html_elements_readonly : employee_keys_html_elements"
+           [form_data]="this.employeeCredentialsForm"
+           >
+           <ng-template #standardTemplate let-item>
+
+              <span *ngIf="item == 'custom_element_username'">
+                <mat-form-field>
+                  <div style="margin-top: 10px">
+                    <input
+                     validateUsername
+                     id="username"  
+                     formControlName="username"
+                     matInput
+                     ngModel
+                     [style.width.%]="94" 
+                     required type="text" 
+                     name="username" 
+                     placeholder="Give a Username">
+                     <mat-spinner *ngIf="credentialsService.is_loading()" class="input-spinner" [diameter]="30"></mat-spinner>
+                  </div>
+                </mat-form-field>
+
+                   <p
+                   *ngIf="credentialsService.get_username_availability_status()"
+                   [ngStyle]="{'color': credentialsService.get_username_availability_status_color(), 'font-weight': 'bold'}">
+                   {{credentialsService.get_username_availability_status()}}
+                  </p>
+                  
+                   
+              </span>
+              
+              <span *ngIf="item == 'custom_element_key'">
+                <mat-form-field>
+                  <div style="margin-top: 10px">
+                    <input
+                     formControlName="key"
+                     id="key"
+                     matInput 
+                     [style.width.%]="94" 
+                     ngModel  
+                     required
+                     [type]="credentialsService.is_visible() ? 'text' : 'password'" 
+                     name="key" 
+                     placeholder="Give a key">
+                    <i (click)="credentialsService.toggle_visibility()" class="material-icons">{{credentialsService.get_icon_visibility()}}</i>
+                  </div>
+                </mat-form-field>
+              </span>
+
+            </ng-template>
+          </app-html-components>
+          
+          <button *ngIf="!is_credentials_readonly" type="submit" name="credentials_submit_btn" style="width: 100%;margin-top: 2%" class="col-md-12 btn btn-primary btn-lg"  mat-raised-button>Submit</button>
+
+          <div *ngIf="is_credentials_readonly">
+            <button 
+             [disabled]="credentialsService.get_username_status() === 'available' ? false : true" 
+             (click)="update_username()" type="button"   
+             style="width: 100%;margin-top: 2%" 
+             class="col-md-12 btn btn-primary btn-lg">
+             Update Username
+            </button>
+            <a  [routerLink]="['/change-key', emp_username]" type="button" style="width: 100%;margin-top: 2%" class="col-md-12 btn btn-primary btn-lg" >Change Key</a>
+          </div>
+             
+        </form>
+      </mat-card>
+
+    </div>
+  </ng-template>
+</app-tab-layout>
+

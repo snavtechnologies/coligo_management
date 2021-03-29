@@ -1,0 +1,409 @@
+<div [formGroup]="form_data">
+
+<div *ngIf="!html_data_to_pass.single_element" class="col-md-12">
+<!-- <div class="row" style="margin-top: 20px;"> -->
+  <span *ngFor="let data of html_data_to_pass">
+  
+  <!-- <mat-card  [ngClass]="data.component_group_name" class="card-for-layout" > -->
+<div  [ngClass]="{'card': data.need_card}">
+    <div class="card-body ">
+
+    <mat-card-title style ="font-weight: 60;" *ngIf="data.card_label != '' && data.card_label">{{data.card_label}}</mat-card-title>	
+          <div *ngIf="!data.table_view" [ngStyle]="{'background-color': data.color}" class="row group_div"> 
+          
+            
+            <span [ngStyle]="data1.highlight_row && {'background-color': (data1.highlight_color? data1.highlight_color: '#FFF8CF')} || {'background-color': ''}" style="margin-top: 20px;" *ngFor="let data1 of data.elements" [ngClass]="data1.line_break_value? {'col-md-12': data1.line_break_value == '12','col-md-6': data1.line_break_value == '6','col-md-4': data1.line_break_value == '4','col-md-3': data1.line_break_value == '3','col-md-2': data1.line_break_value == '2', 'space_under': true}:{'col-md-12': data.no_of_elements_in_a_row == '1','col-md-6': data.no_of_elements_in_a_row == '2', 'col-md-4 ': data.no_of_elements_in_a_row == '3', 'col-md-3': data.no_of_elements_in_a_row == '4', 'col-md-2': data.no_of_elements_in_a_row == '6'}"> 
+            
+            <span *ngIf="data1.blank == true"></span>    
+            <span *ngIf="data1.textbox == true">
+              <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br>
+                <mat-form-field [floatLabel]="data1.float_placeholder" class="margin">
+                  <input [style.background-color]="data1.readonly ? '#F3F3F3' : ''" [id]="data1.name" [formControlName]="data1.name" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" matInput [readonly]="data1.readonly" [required]="data1.required" type="text" [attr.name]="data1.name" [placeholder]="!data1.readonly? data1.placeholder: ''"  [ngClass]="data1.classes"   [mask]="data1.simplemask" [prefix]="data1.prefix" [sufix]="data1.sufix" [clearIfNotMatch]="data1.clear" (blur)="html_event(data1.name, $event)" (keyup)="html_event(data1.name, $event)">
+                </mat-form-field>
+              </span>
+
+              <span *ngIf="data1.numberbox == true">
+                <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br>
+                  <mat-form-field [floatLabel]="data1.float_placeholder" class="margin">
+                    <input [style.background-color]="data1.readonly ? '#F3F3F3' : ''" [formControlName]="data1.name" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" matInput [readonly]="data1.readonly" [required]="data1.required" type="number" [attr.name]="data1.name" [placeholder]="!data1.readonly? data1.placeholder: ''"  [ngClass]="data1.classes" (blur)="html_event(data1.name, $event)" (keyup)="html_event(data1.name, $event)">
+                  </mat-form-field>
+                </span>
+
+              <span *ngIf="data1.email == true">
+                    <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br>
+                      <mat-form-field [floatLabel]="data1.float_placeholder" class="margin">
+                        <input [style.background-color]="data1.readonly ? '#F3F3F3' : ''" [formControlName]="data1.name" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" matInput [readonly]="data1.readonly" [required]="data1.required" type="email" [attr.name]="data1.name" [placeholder]="!data1.readonly? data1.placeholder: ''"  [ngClass]="data1.classes" (blur)="html_event(data1.name, $event)" (keyup)="html_event(data1.name, $event)">
+                      </mat-form-field>
+                    </span>
+
+              <span *ngIf="data1.button == true">
+              <!-- <button mat-raised-button class="btn" [ngClass]="{'btn-primary': data1.type == 'primary','btn-info': data1.type == 'info','btn-success': data1.type == 'success','btn-warning': data1.type == 'warning','btn-danger': data1.type == 'danger','btn-sm': data1.size == 'small','btn-lg': data1.size == 'large','': data1.size == 'regular'}">{{data1.value}}</button>  -->
+              <button [attr.name]="data1.name" type="button" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" mat-raised-button class="btn" [ngClass]="data1.classes" (click)="html_event(data1.name, $event)">{{data1.value}}</button>
+              </span>
+
+              <span *ngIf="data1.submit == true">
+                    <button [attr.name]="data1.name" type="submit" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" mat-raised-button class="btn" [ngClass]="data1.classes" (click)="html_event(data1.name, $event)">{{data1.value}}</button>
+            </span>
+
+              <span *ngIf="data1.textarea == true">
+                 <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br>
+                  <mat-form-field class="margin">
+                    <textarea [style.background-color]="data1.readonly ? '#F3F3F3' : ''" [formControlName]="data1.name" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" matInput [readonly]="data1.readonly" [required]="data1.required" [attr.name]="data1.name" [placeholder]="!data1.readonly? data1.placeholder: ''" [ngClass]="data1.classes" (blur)="html_event(data1.name, $event)" (keyup)="html_event(data1.name, $event)">{{data1.value}}</textarea>
+                  </mat-form-field>
+                </span>
+
+            <span *ngIf="data1.filechooser == true">
+            <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br><br>
+            <div [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" class="fileinput fileinput-new text-center" data-provides="fileinput">
+                <!-- <mat-card> -->
+              <div class="fileinput-new thumbnail">
+                    <img src="./assets/img/upload.png" alt="...">
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail"></div>
+              <!-- </mat-card> -->
+              <br>
+                <div>
+                    <span class="btn btn-primary btn-sm btn-round btn-file">
+                        <span class="fileinput-new">Select file</span>
+                        <span class="fileinput-exists">Change</span>
+
+                        <input [formControlName]="data1.name" [required]="data1.required" [ngClass]="data1.classes" type="file" [attr.name]="data1.name" (change)="html_event_image(data1.name, $event.target.files)"/>
+                    </span>
+                    <a [href]="data1.href" class="btn btn-danger btn-round btn-sm fileinput-exists" data-dismiss="fileinput" id="remove"><i class="fa fa-times"></i> Remove</a>
+                </div>
+            </div>
+            </span>
+
+            <span  *ngIf="data1.image == true">
+               <mat-label><b>{{data1.label}}</b></mat-label><br>
+              <img [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" class="margin" [src]="data1.src" [alt]="data1.brokentext"  [ngClass]="data1.classes">
+            </span>
+
+            <span *ngIf="data1.select == true">
+                <b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b><br>
+                <mat-form-field class="margin">
+                    <mat-select [formControlName]="data1.name" [required]="data1.required" [attr.disabled]="data1.disabled" [value]="data1.default? data1.default:null" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" [attr.name]="data1.name" [multiple]="data1.multiple" [placeholder]="data1.placeholder"  [ngClass]="data1.classes" (selectionChange)="html_event(data1.name, $event, 1)">
+                     
+                      <mat-option *ngFor="let item of data1.options" [value]="item.value">
+                            {{ item.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- <div style="margin-top: 20px;" class="select">    
+                  <select [formControlName]="data1.name" class="form-control" [required]="data1.required" [value]="data1.default? data1.default:null" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" [attr.name]="data1.name" [multiple]="data1.multiple"   [ngClass]="data1.classes" (change)="html_event(data1.name, $event, 1)">
+                           <option value="">Not Specified</option> 
+                           <option *ngFor="let item of data1.options" [value]="item.value">
+                               {{ item.viewValue }}
+                           </option>
+                       </select>
+                  </div> -->
+                </span>
+
+                <span *ngIf="data1.radio == true">
+                    <mat-label><b [ngClass]="{'give_weight': data1.radio_details[0].required}">{{data1.label}}</b></mat-label><br>
+                    <div *ngFor="let radios of data1.radio_details" class="form-check">
+                    <label class="form-check-label">
+                      <input radios [ngClass]="radios.classes" [ngStyle]="radios.custom_styles? getStyle(radios.custom_styles):null" [required]="radios.required" class="form-check-input" type="radio" [formControlName]="radios.name" [attr.name]="radios.name" [value]="radios.value">{{radios.text}}<span style="margin-left: 75px;" *ngIf="radios.required"> *</span>
+                      <span class="circle">
+                        <span class="check"></span>
+                      </span>
+                    </label>
+                  </div>
+                </span>
+
+                <span *ngIf="data1.datepicker == true">
+                  <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br>
+                  <mat-form-field [floatLabel]="data1.float_placeholder" class="margin">
+                    <input [style.background-color]="true ? '#F3F3F3' : ''" #dp readonly="true" [matDatepicker]="picker" [formControlName]="data1.name" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" matInput [required]="data1.required" [attr.name]="data1.name" placeholder="Pick from calender"  [ngClass]="data1.classes" (dateChange)="html_event(data1.name, dp.value, 2)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                </mat-form-field>
+
+              </span>
+                <span  *ngIf="data1.custom_element == true">
+                <mat-card *ngIf="data1.need_block == true">
+                    <mat-label><b [ngClass]="{'give_weight': data1.is_element_required}">{{data1.label}}  </b></mat-label><br>
+                    <!-- <app-custom-html-components [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" [custom_element_identification]="data1.custom_element_identification" [custom_form_data]="form_data"></app-custom-html-components> -->
+                    <ng-template 
+                    ngFor let-item [ngForOf]="[data1.custom_element_identification]" [ngForTemplate]="standardTemplate"  
+                    ></ng-template>
+               </mat-card>
+
+               <span *ngIf="!data1.need_block">
+                  <mat-label><b [ngClass]="{'give_weight': data1.is_element_required}">{{data1.label}}</b></mat-label><br>
+                  <!-- <app-custom-html-components [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" [custom_element_identification]="data1.custom_element_identification" [custom_form_data]="form_data"></app-custom-html-components> -->
+                  <ng-template 
+                  ngFor let-item [ngForOf]="[data1.custom_element_identification]" [ngForTemplate]="standardTemplate"
+                  ></ng-template>
+               </span>
+                </span>
+            </span>
+          </div>
+
+          <span *ngIf="data.table_view">
+              <div>
+                  <table width="100%" class="table"> 
+                  <tbody style="background-color: #F2F4FE">
+                      <tr *ngFor="let data1 of data.elements; let i = index">
+                        <td>
+                        <span *ngIf="data1.blank == true"></span>
+                        <span *ngIf="data1.textbox == true">
+                        <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br>
+                            <input [style.background-color]="data1.readonly ? '#F3F3F3' : ''" [formControlName]="data1.name" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" matInput [readonly]="data1.readonly" [required]="data1.required" type="text" [attr.name]="data1.name" [placeholder]="!data1.readonly? data1.placeholder: ''"  [ngClass]="data1.classes"   [mask]="data1.simplemask" [prefix]="data1.prefix" [sufix]="data1.sufix" [clearIfNotMatch]="data1.clear" (blur)="html_event(data1.name, $event)" (keyup)="html_event(data1.name, $event)">
+                        </span>
+
+                        <span *ngIf="data1.numberbox == true">
+                          <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br>
+                              <input [style.background-color]="data1.readonly ? '#F3F3F3' : ''" [formControlName]="data1.name" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" matInput [readonly]="data1.readonly" [required]="data1.required" type="number" [attr.name]="data1.name" [placeholder]="!data1.readonly? data1.placeholder: ''"  [ngClass]="data1.classes" (blur)="html_event(data1.name, $event)" (keyup)="html_event(data1.name, $event)">
+                          </span>
+
+                        <span *ngIf="data1.email == true">
+                              <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br>
+                                  <input [style.background-color]="data1.readonly ? '#F3F3F3' : ''" [formControlName]="data1.name" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" matInput [readonly]="data1.readonly" [required]="data1.required" type="email" [attr.name]="data1.name" [placeholder]="!data1.readonly? data1.placeholder: ''"  [ngClass]="data1.classes" (blur)="html_event(data1.name, $event)" (keyup)="html_event(data1.name, $event)">
+                        </span>
+
+                        <span *ngIf="data1.button == true">
+                        <!-- <button mat-raised-button class="btn" [ngClass]="{'btn-primary': data1.type == 'primary','btn-info': data1.type == 'info','btn-success': data1.type == 'success','btn-warning': data1.type == 'warning','btn-danger': data1.type == 'danger','btn-sm': data1.size == 'small','btn-lg': data1.size == 'large','': data1.size == 'regular'}">{{data1.value}}</button>  -->
+                        <button [attr.name]="data1.name" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" mat-raised-button class="btn" [ngClass]="data1.classes" (click)="html_event(data1.name, $event)">{{data1.value}}</button>
+                        </span>
+
+                       
+
+                        <span *ngIf="data1.submit == true">
+                              <button [attr.name]="data1.name" type="submit" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" mat-raised-button class="btn" [ngClass]="data1.classes" (click)="html_event(data1.name, $event)">{{data1.value}}</button>
+                       </span>
+
+                        <span *ngIf="data1.textarea == true">
+                          <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br>
+                              <textarea [style.background-color]="data1.readonly ? '#F3F3F3' : ''" [formControlName]="data1.name" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" matInput [readonly]="data1.readonly" [required]="data1.required" [attr.name]="data1.name" [placeholder]="!data1.readonly? data1.placeholder: ''" [ngClass]="data1.classes" (blur)="html_event(data1.name, $event)" (keyup)="html_event(data1.name, $event)">{{data1.value}}</textarea>
+                        </span>
+
+                        <span *ngIf="data1.filechooser == true">
+                        <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br><br>
+                        <div [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <!-- <mat-card> -->
+                          <div class="fileinput-new thumbnail">
+                                <img src="./assets/img/upload.png" alt="...">
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                          <!-- </mat-card> -->
+                          <br>
+                            <div>
+                                <span class="btn btn-primary btn-sm btn-round btn-file">
+                                    <span class="fileinput-new">Select file</span>
+                                    <span class="fileinput-exists">Change</span>
+
+                                    <input [formControlName]="data1.name" [required]="data1.required" [ngClass]="data1.classes" type="file" [attr.name]="data1.name" />
+                                </span>
+                                <a [href]="data1.href" class="btn btn-danger btn-round btn-sm fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                            </div>
+                        </div>
+                        </span>
+
+                        <span  *ngIf="data1.image == true">
+                          <mat-label><b>{{data1.label}}</b></mat-label><br>
+                          <img [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" class="margin" [src]="data1.src" [alt]="data1.brokentext"  [ngClass]="data1.classes">
+                        </span>
+
+                         <span *ngIf="data1.select == true">
+                          <b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b><br>
+                          <mat-form-field class="margin">
+                              <mat-select [formControlName]="data1.name" [required]="data1.required" [value]="data1.default? data1.default:null" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" [attr.name]="data1.name" [multiple]="data1.multiple" [placeholder]="data1.placeholder"  [ngClass]="data1.classes" (selectionChange)="html_event(data1.name, $event, 1)">
+                                  <mat-option *ngFor="let item of data1.options" [value]="item.value">
+                                      {{ item.viewValue }}
+                                  </mat-option>
+                              </mat-select>
+                          </mat-form-field>
+                          </span>
+
+                          <span *ngIf="data1.radio == true">
+                              <mat-label><b [ngClass]="{'give_weight': data1.radio_details[0].required}">{{data1.label}}</b></mat-label><br>
+                              <div *ngFor="let radios of data1.radio_details" class="form-check">
+                              <label class="form-check-label">
+                                <input radios [ngClass]="radios.classes" [ngStyle]="radios.custom_styles? getStyle(radios.custom_styles):null" [required]="radios.required" class="form-check-input" type="radio" [formControlName]="radios.name" [attr.name]="radios.name" [value]="radios.value">{{radios.text}}<span style="margin-left: 75px;" *ngIf="radios.required"> *</span>
+                                <span class="circle">
+                                  <span class="check"></span>
+                                </span>
+                              </label>
+                            </div>
+                          </span>
+
+                          <span *ngIf="data1.datepicker == true">
+                            <mat-label><b [ngClass]="{'give_weight': data1.required}">{{data1.label}}</b></mat-label><br>
+                              <input [style.background-color]="true ? '#F3F3F3' : ''" #dp readonly="true" [matDatepicker]="picker" [formControlName]="data1.name" [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" matInput [required]="data1.required" [attr.name]="data1.name" placeholder="Pick from calender"  [ngClass]="data1.classes" (dateChange)="html_event(data1.name, dp.value, 2)">
+                              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                              <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                        </span>
+
+
+                          <span  *ngIf="data1.custom_element == true">
+                          <span [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null">
+                              <mat-card *ngIf="data1.need_block == true">
+                                  <mat-label><b [ngClass]="{'give_weight': data1.is_element_required}">{{data1.label}}</b></mat-label><br>
+                                  <!-- <app-custom-html-components [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" [custom_element_identification]="data1.custom_element_identification" [custom_form_data]="form_data"></app-custom-html-components> -->
+                                  <ng-template 
+                                  ngFor let-item [ngForOf]="[data1.custom_element_identification]" [ngForTemplate]="standardTemplate"
+                                  ></ng-template>
+                            </mat-card>
+
+                            <span *ngIf="!data1.need_block">
+                                <mat-label><b [ngClass]="{'give_weight': data1.is_element_required}">{{data1.label}}</b></mat-label><br>
+                                <!-- <app-custom-html-components [ngStyle]="data1.custom_styles? getStyle(data1.custom_styles):null" [custom_element_identification]="data1.custom_element_identification" [custom_form_data]="form_data"></app-custom-html-components> -->
+                                <ng-template 
+                                ngFor let-item [ngForOf]="[data1.custom_element_identification]" [ngForTemplate]="standardTemplate"
+                                ></ng-template>
+                            </span>
+                        </span>
+                          </span>
+                    </td>
+                  </tr>
+                  </tbody>
+                  </table>
+                </div>
+          </span>
+          <span *ngIf="data.add_more == true">
+              <!-- <button mat-raised-button class="btn" [ngClass]="{'btn-primary': data1.type == 'primary','btn-info': data1.type == 'info','btn-success': data1.type == 'success','btn-warning': data1.type == 'warning','btn-danger': data1.type == 'danger','btn-sm': data1.size == 'small','btn-lg': data1.size == 'large','': data1.size == 'regular'}">{{data1.value}}</button>  -->
+              <button type="button" [attr.name]="data.add_more_button_name"  mat-raised-button class="btn pull-left" (click)="html_events_addmore(data.add_more_button_name, $event)">{{(data.add_more_button_name.replace('_',' '))}}</button>
+              <button type="button"  mat-raised-button class="btn btn-danger right" (click)="html_events_addmore_refresh(data.add_more_button_name, $event)">Refresh</button>
+
+              <table [class]="data.add_more_button_name" cellpadding="5" id="add_more_table">
+               <thead>
+                 <tr>
+                 <th [class]="(data.add_more_button_name)+'_thead'" *ngFor="let data1 of data.elements; let i = index" style="display:none;">
+                  {{data1.name}}
+                   </th>
+                  </tr>
+                 </thead>
+                 <tbody [class]="(data.add_more_button_name)+'_tbody'">
+                   </tbody>
+                   <tfoot [class]="(data.add_more_button_name)+'_tfoot'">
+                     </tfoot>
+             </table>
+            </span>
+  <!-- </mat-card> -->
+    </div>
+</div>
+  </span>
+<!-- </div> -->
+</div>
+<span *ngIf="html_data_to_pass.single_element == true">              
+    <span *ngIf="html_data_to_pass.textbox == true">
+         <mat-label><span *ngIf="html_data_to_pass.label != '' && html_data_to_pass.label"><b [ngClass]="{'give_weight': html_data_to_pass.required}">{{html_data_to_pass.label}}</b><br></span> </mat-label>
+      <mat-form-field [floatLabel]="html_data_to_pass.float_placeholder" class="margin">
+        <input [style.background-color]="html_data_to_pass.readonly ? '#F3F3F3' : ''" [formControlName]="html_data_to_pass.name" [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" matInput [readonly]="html_data_to_pass.readonly" [required]="html_data_to_pass.required" type="text" [attr.name]="html_data_to_pass.name" [placeholder]="!html_data_to_pass.readonly? html_data_to_pass.placeholder: ''"  [ngClass]="html_data_to_pass.classes" [mask]="html_data_to_pass.simplemask" [prefix]="html_data_to_pass.prefix" [sufix]="html_data_to_pass.sufix" [clearIfNotMatch]="html_data_to_pass.clear" (blur)="html_event(html_data_to_pass.name, $event)" (keyup)="html_event(html_data_to_pass.name, $event)">
+      </mat-form-field>
+    </span>
+    <span *ngIf="html_data_to_pass.numberbox == true">
+      <mat-label><span *ngIf="html_data_to_pass.label != '' && html_data_to_pass.label"><b [ngClass]="{'give_weight': html_data_to_pass.required}">{{html_data_to_pass.label}}</b><br></span> </mat-label>
+   <mat-form-field [floatLabel]="html_data_to_pass.float_placeholder" class="margin">
+     <input [style.background-color]="html_data_to_pass.readonly ? '#F3F3F3' : ''" [formControlName]="html_data_to_pass.name" [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" matInput [readonly]="html_data_to_pass.readonly" [required]="html_data_to_pass.required" type="number" [attr.name]="html_data_to_pass.name" [placeholder]="!html_data_to_pass.readonly? html_data_to_pass.placeholder: ''"  [ngClass]="html_data_to_pass.classes" (blur)="html_event(html_data_to_pass.name, $event)" (keyup)="html_event(html_data_to_pass.name, $event)">
+   </mat-form-field>
+ </span>
+    <span *ngIf="html_data_to_pass.email == true">
+            <mat-label><span *ngIf="html_data_to_pass.label != '' && html_data_to_pass.label"><b [ngClass]="{'give_weight': html_data_to_pass.required}">{{html_data_to_pass.label}}</b><br></span> </mat-label>
+         <mat-form-field [floatLabel]="html_data_to_pass.float_placeholder" class="margin">
+           <input [style.background-color]="html_data_to_pass.readonly ? '#F3F3F3' : ''" [formControlName]="html_data_to_pass.name" [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" matInput [readonly]="html_data_to_pass.readonly" [required]="html_data_to_pass.required" type="email" [attr.name]="html_data_to_pass.name" [placeholder]="!html_data_to_pass.readonly? html_data_to_pass.placeholder: ''"  [ngClass]="html_data_to_pass.classes" (blur)="html_event(html_data_to_pass.name, $event)" (keyup)="html_event(html_data_to_pass.name, $event)">
+         </mat-form-field>
+       </span>
+    <span *ngIf="html_data_to_pass.button == true">
+    <!-- <button mat-raised-button class="btn" [ngClass]="{'btn-primary': data1.type == 'primary','btn-info': data1.type == 'info','btn-success': data1.type == 'success','btn-warning': data1.type == 'warning','btn-danger': data1.type == 'danger','btn-sm': data1.size == 'small','btn-lg': data1.size == 'large','': data1.size == 'regular'}">{{data1.value}}</button>  -->
+    <button [attr.name]="html_data_to_pass.name" [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" mat-raised-button class="btn" [ngClass]="html_data_to_pass.classes" (click)="html_event(html_data_to_pass.name, $event)" >{{html_data_to_pass.value}}</button>
+  </span>
+
+  <span *ngIf="html_data_to_pass.submit == true">
+        <button type="submit" [attr.name]="html_data_to_pass.name" [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" mat-raised-button class="btn" [ngClass]="html_data_to_pass.classes" (click)="html_event(html_data_to_pass.name, $event)" >{{html_data_to_pass.value}}</button>
+</span>
+
+  <span *ngIf="html_data_to_pass.textarea == true">
+       <mat-label><b [ngClass]="{'give_weight': html_data_to_pass.required}">{{html_data_to_pass.label}}</b> </mat-label><br>
+        <mat-form-field class="margin">
+          <textarea [style.background-color]="html_data_to_pass.readonly ? '#F3F3F3' : ''" [formControlName]="html_data_to_pass.name" [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" [readonly]="html_data_to_pass.readonly" matInput [required]="html_data_to_pass.required" [attr.name]="html_data_to_pass.name" [placeholder]="!html_data_to_pass.readonly? html_data_to_pass.placeholder: ''" [ngClass]="html_data_to_pass.classes" (blur)="html_event(html_data_to_pass.name, $event)" (keyup)="html_event(html_data_to_pass.name, $event)">{{html_data_to_pass.value}}</textarea>
+        </mat-form-field>
+      </span>
+  <span  *ngIf="html_data_to_pass.filechooser == true">
+        <mat-label><b [ngClass]="{'give_weight': html_data_to_pass.required}">{{html_data_to_pass.label}}</b> </mat-label><br><br>
+          <div [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" class="fileinput fileinput-new text-center" data-provides="fileinput">
+              <!-- <mat-card> -->
+            <div class="fileinput-new thumbnail">
+                  <img src="./assets/img/upload.png" alt="...">
+              </div>
+              <div class="fileinput-preview fileinput-exists thumbnail"></div>
+            <!-- </mat-card> -->
+            <br>
+              <div>
+                  <span class="btn btn-primary btn-sm btn-round btn-file">
+                      <span class="fileinput-new">Select file</span>
+                      <span class="fileinput-exists">Change</span>
+
+                      <input [formControlName]="html_data_to_pass.name" [required]="html_data_to_pass.required" [ngClass]="html_data_to_pass.classes" type="file" [attr.name]="html_data_to_pass.name" />
+                  </span>
+                  <a [href]="html_data_to_pass.href" class="btn btn-danger btn-round btn-sm fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+              </div>
+          </div>
+      </span>
+      <span  *ngIf="html_data_to_pass.image == true">
+        <mat-label> <span  *ngIf="html_data_to_pass.label != '' && html_data_to_pass.label"><b>{{html_data_to_pass.label}}</b></span></mat-label><br>
+        <img [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" class="margin" [src]="html_data_to_pass.src" [alt]="html_data_to_pass.brokentext"  [ngClass]="html_data_to_pass.classes">
+        </span>
+        <span *ngIf="html_data_to_pass.select == true">
+           <mat-label> <span  *ngIf="html_data_to_pass.label != '' && html_data_to_pass.label"><b [ngClass]="{'give_weight': html_data_to_pass.required}">{{html_data_to_pass.label}}</b></span></mat-label><br>
+            <mat-form-field class="margin">
+                <mat-select [formControlName]="html_data_to_pass.name" [required]="html_data_to_pass.required" [value]="html_data_to_pass.default? html_data_to_pass.default:null" [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" [attr.name]="html_data_to_pass.name" [multiple]="html_data_to_pass.multiple" [placeholder]="html_data_to_pass.placeholder"  [ngClass]="html_data_to_pass.classes" (selectionChange)="html_event(html_data_to_pass.name, $event, 1)">
+                    <mat-option *ngFor="let item of html_data_to_pass.options" [value]="item.value">
+                        {{ item.viewValue }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            </span>
+            <!-- <span *ngIf="html_data_to_pass.select == true">
+              <mat-label> <span  *ngIf="html_data_to_pass.label != '' && html_data_to_pass.label"><b>{{html_data_to_pass.label}}</b></span></mat-label><br>
+              <div style="margin-top: 20px;" class="select">    
+              <select [formControlName]="html_data_to_pass.name" class="form-control" [required]="html_data_to_pass.required" [value]="html_data_to_pass.default? html_data_to_pass.default:null" [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" [attr.name]="html_data_to_pass.name" [multiple]="html_data_to_pass.multiple"   [ngClass]="html_data_to_pass.classes" (change)="html_event(html_data_to_pass.name, $event, 1)">
+                       <option value="">Not Specified</option> 
+                       <option *ngFor="let item of html_data_to_pass.options" [value]="item.value">
+                           {{ item.viewValue }}
+                       </option>
+                   </select>
+              </div>
+               </span> -->
+            <span *ngIf="html_data_to_pass.radio == true">
+                <mat-label> <span  *ngIf="html_data_to_pass.label != '' && html_data_to_pass.label"><b [ngClass]="{'give_weight': html_data_to_pass.radio_details[0].required}">{{html_data_to_pass.label}}</b></span></mat-label><br>
+
+              <div *ngFor="let radios of html_data_to_pass.radio_details" class="form-check">
+                <label class="form-check-label">
+                  <input [formControlName]="html_data_to_pass.name" radios [ngClass]="radios.classes" [ngStyle]="radios.custom_styles? getStyle(radios.custom_styles):null" [required]="radios.required" class="form-check-input" type="radio" [attr.name]="radios.name" [value]="radios.value">{{radios.text}}
+                  <span class="circle">
+                    <span class="check"></span>
+                  </span>
+                </label>
+              </div>
+            </span>
+            <span *ngIf="html_data_to_pass.datepicker == true">
+              <mat-label><span *ngIf="html_data_to_pass.label != '' && html_data_to_pass.label"><b [ngClass]="{'give_weight': html_data_to_pass.required}">{{html_data_to_pass.label}}</b><br></span> </mat-label>
+           <mat-form-field [floatLabel]="html_data_to_pass.float_placeholder" class="margin">
+             <input [style.background-color]="true ? '#F3F3F3' : ''" #dp readonly="true" [matDatepicker]="picker" [formControlName]="html_data_to_pass.name" [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" matInput [required]="html_data_to_pass.required" [attr.name]="html_data_to_pass.name" placeholder="Pick from calender"  [ngClass]="html_data_to_pass.classes" (dateChange)="html_event(html_data_to_pass.name, dp.value, 2)">
+             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+             <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+            </mat-form-field>
+         </span>
+            <span  *ngIf="html_data_to_pass.custom_element == true">
+                  <span [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null">
+                  <mat-card *ngIf="html_data_to_pass.need_block == true">
+                  <mat-label><span  *ngIf="html_data_to_pass.label != '' && html_data_to_pass.label"><b [ngClass]="{'give_weight': html_data_to_pass.is_element_required}">{{html_data_to_pass.label}}</b></span></mat-label><br>
+                  <!-- <app-custom-html-components [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" [custom_element_identification]="html_data_to_pass.custom_element_identification" [custom_form_data]="form_data"></app-custom-html-components> -->
+                  <ng-template 
+                      ngFor let-item [ngForOf]="[html_data_to_pass.custom_element_identification]" [ngForTemplate]="standardTemplate"
+                      ></ng-template>
+                  </mat-card>
+
+                  <span *ngIf="!html_data_to_pass.need_block">
+                      <mat-label><span  *ngIf="html_data_to_pass.label != '' && html_data_to_pass.label"><b [ngClass]="{'give_weight': html_data_to_pass.is_element_required}">{{html_data_to_pass.label}}</b></span></mat-label><br>
+                      <!-- <app-custom-html-components [ngStyle]="html_data_to_pass.custom_styles? getStyle(html_data_to_pass.custom_styles):null" [custom_element_identification]="html_data_to_pass.custom_element_identification" [custom_form_data]="form_data"></app-custom-html-components> -->
+                      <ng-template 
+                          ngFor let-item [ngForOf]="[html_data_to_pass.custom_element_identification]" [ngForTemplate]="standardTemplate"
+                          ></ng-template>
+                  </span>
+              </span>
+              </span>
+      </span>
+</div>

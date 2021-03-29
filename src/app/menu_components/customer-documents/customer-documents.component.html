@@ -1,0 +1,129 @@
+<div class = "row">
+  
+  <div class ="col-md-5">
+      <app-tab-layout [tab_layout_ui_data_to_receive]="tab_layout_ui_data_to_send">
+          <ng-template>
+                    <div class="tab-pane"  id="link1"  >
+                      <span *ngIf = "flagg != 0">   <form [formGroup]="CustomerDocumentEditForm" (ngSubmit)="form_submit(formDirective, 1)" #formDirective="ngForm">    
+                            <app-html-components [html_data_to_pass] = "customer_document_Edit_html_elements" [form_data]="this.CustomerDocumentEditForm" (html_events)= "get_html_events($event)">
+                              </app-html-components>     
+                             <button style="width: 50%;margin-top: 2%" class="col-md-12 btn btn-primary btn-md" [disabled]="!CustomerDocumentEditForm.valid" mat-raised-button type="submit" >Edit Document</button>
+                             <input [hidden]="true" required="true" formControlName="prevent_warning">  </form></span>
+                             <span *ngIf = "flagg==0" >Please select a Document from right panel</span>
+  
+                            </div>
+  <div class="tab-pane active" id="link2" >
+    
+      <form [formGroup]="CustomerDocumentForm" (ngSubmit)="form_submit(formDirective, 0)" #formDirective="ngForm">        
+          <app-html-components [html_data_to_pass] = "customer_document_html_elements" [form_data]="this.CustomerDocumentForm" (html_events)= "get_html_events($event)" >
+              <ng-template #standardTemplate let-item>
+                  <div>
+                      <span *ngIf="item=='kyc_reg_show_webcam'">
+                          <button class="btn" type="button" (click)="toggleWebcam();">Show/Hide Webcam</button>
+                          <button class="btn" type="button" *ngIf="showWebcam" (click)="triggerSnapshot();">Scan Signature</button>
+
+                          <div  *ngIf="showWebcam">
+                              <webcam [height]="150" [width]="150" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" (imageCapture)="handleImage1($event)" *ngIf="showWebcam"
+                              [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+                              [videoOptions]="videoOptions"
+                              [imageQuality]="1"
+                              (cameraSwitched)="cameraWasSwitched($event)"
+                              (initError)="handleInitError($event)"></webcam>
+
+
+                    </div>
+                              
+                        <div class="snapshot" *ngIf="webcamImage">
+                        
+                        <img [src]="webcamImage.imageAsDataUrl" #webcam_image/>
+                      </div>
+                      <!--<div class="snapshot" *ngIf="webcamSignature">
+                          <h2>nice</h2>
+                        <img [src]="webcamSignature.imageAsDataUrl"/>
+                      </div>-->
+                        </span>
+                  </div>
+            <!--<div style="height:200px; width:200px;background-color:red" *ngIf="showWebcam">
+              <webcam [height]="200" [width]="200" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" (imageCapture)="handleImage1($event)" *ngIf="showWebcam"
+              [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+              [videoOptions]="videoOptions"
+              [imageQuality]="1"
+              (cameraSwitched)="cameraWasSwitched($event)"
+              (initError)="handleInitError($event)"
+      ></webcam>
+      <button class="btn" type="button" (click)="triggerSnapshot();">Snap Photo</button>
+    </div>-->
+    </ng-template>
+        </app-html-components> 
+     
+      <!-- <div style="text-align:center">
+        
+          <div>
+            <webcam [height]="200" [width]="200" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" (imageCapture)="handleImage1($event)" *ngIf="showWebcam"
+                    [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+                    [videoOptions]="videoOptions"
+                    [imageQuality]="1"
+                    (cameraSwitched)="cameraWasSwitched($event)"
+                    (initError)="handleInitError($event)"
+            ></webcam>
+            <br/>
+            <button class="btn" type="button" (click)="triggerSnapshot();">Snap Photo</button>
+            <button class="btn" type="button" (click)="triggerSnapshot1();">Snap Signature</button>
+            <button class="btn" type="button" (click)="toggleWebcam();">Toggle Webcam</button>-->
+           <!-- <br/>
+            <button class="actionBtn" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
+            <input id="cameraSwitchCheckbox" type="checkbox" [(ngModel)]="allowCameraSwitch"><label for="cameraSwitchCheckbox">Allow Camera Switch</label>
+            <br/>
+            DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
+            <button (click)="showNextWebcam(deviceId);">Activate</button>
+          </div>
+        </div>
+        
+        <div class="snapshot" *ngIf="webcamImage">
+          <h2>nice</h2>
+          <img [src]="webcamImage.imageAsDataUrl"/>
+        </div>
+        <div class="snapshot" *ngIf="webcamSignature">
+            <h2>nice</h2>
+          <img [src]="webcamSignature.imageAsDataUrl"/>
+        </div> -->  
+        <!-- <button style="float: right" type="button" (click)="this.basic_function_obj.find_invalid(this.loanlistForm)" class="btn"><b>Validate Form</b></button>             -->
+        <button style="width: 50%;margin-top: 2%" class="col-md-12 btn btn-primary btn-md" [disabled]="!CustomerDocumentForm.valid" mat-raised-button type="submit" >Add Document </button>  
+        <input [hidden]="true" required="true" formControlName="prevent_warning">
+        </form> 
+      
+  </div>
+  
+  </ng-template>
+  </app-tab-layout>
+  
+  </div>
+  <div class="col-md-7" style="margin-top: 32px;">
+      <mat-card>  <div class = "col-md-6">
+          <app-search-box  [search_box]="search_box" (fn_on_search)= "fn_on_search($event)" (html_events)= "fn_tableData_display($event.value)"></app-search-box>
+
+       </div>
+  <app-table [table_data] = "table_data_to_send">
+    <ng-template>
+        <tr *ngFor = "let l of DocumentDetails index as i" ><td>{{i+1}}</td>
+               
+                <td (click) = changeTab(l.id) *ngIf="l.folder == '01'">KYC</td>
+                <td (click) = changeTab(l.id) *ngIf="l.folder == '02'">Income Documents</td>
+                <td (click) = changeTab(l.id) *ngIf="l.folder == '03'">Bank Statements</td>
+                <td (click) = changeTab(l.id) *ngIf="l.folder == '04'">Land Documents</td>
+                <td (click) = changeTab(l.id) *ngIf="l.folder == '05'">Asset Documents</td>
+                <td (click) = changeTab(l.id) *ngIf="l.folder == '06'">Liability Documents</td>
+                <td (click) = changeTab(l.id) *ngIf="l.folder == '07'">IT Returns</td>
+                <td (click) = changeTab(l.id) *ngIf="l.folder == '09'">Balance Sheets</td>
+
+                <td (click) = changeTab(l.id) *ngIf="l.folder == '08'">Licence & Registration documents</td>
+                <td>{{l.document_name}}</td>
+                <td><a href="http://localhost/coligo_management_suite/backend/images/{{l.document}}"  id="docs" target="_blank"><button style= "margin-left: 10%"><i class="fa fa-download"></i></button></a> 
+                <button (click)= fn_delete(l.id) style= "margin-left: 5%"> <i class="fa fa-trash" ></i></button></td>
+                </tr>
+              
+        </ng-template> 
+    </app-table> </mat-card>  
+</div>
+  </div>
+   

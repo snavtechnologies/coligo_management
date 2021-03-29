@@ -1,0 +1,50 @@
+
+.emp_new_date_group {
+    margin-top: 14.5px;
+}
+.emp_new_id_select {
+    margin-top:-24px;width: 125px;
+}
+.emp_new_contact_type_select
+{
+    margin-top:-24px;width: 125px;
+}
+.emp_image
+{
+    width: 20px;
+}
+.card-credentials
+{
+    width: 60%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.material-icons
+{
+    cursor: pointer;
+}
+.input-spinner
+{
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+}
+.hidden {
+    display: none;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
+.shown {
+    display: block;
+}
+.options.mat-option {
+    height: unset;
+    margin-bottom: 2%;
+}
+::ng-deep .options .mat-option-text.mat-option-text {
+    white-space: normal;   
+}
+
+

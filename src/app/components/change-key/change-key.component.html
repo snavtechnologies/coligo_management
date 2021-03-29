@@ -1,0 +1,54 @@
+<mat-card class="card-credentials">
+  <form
+   [formGroup]="form"
+   (ngSubmit)="submit()"
+   [ngStyle]="{ 'background-color': this.color }">
+
+    <app-html-components
+      [html_data_to_pass]="form_html_elements"
+      [form_data]="this.form">
+
+      <ng-template #standardTemplate let-item>
+
+        <span *ngIf="item == 'custom_element_admin_password'">
+          <mat-form-field>
+            <div style="margin-top: 10px">
+              <input
+               (focus)=true
+               formControlName="admin_password"
+               id="admin_password"
+               matInput 
+               [style.width.%]="94" 
+               [type]="adminPasswdCredentialsService.is_visible() ? 'text' : 'password'"
+               ngModel  
+               required
+               placeholder="Enter Admin Password">
+               <i (click)="adminPasswdCredentialsService.toggle_visibility()" class="material-icons">{{adminPasswdCredentialsService.get_icon_visibility()}}</i>
+            </div>
+          </mat-form-field>
+        </span>
+
+        <span *ngIf="item == 'custom_element_new_password'">
+          <mat-form-field>
+            <div style="margin-top: 10px">
+              <input
+               formControlName="new_password"
+               id="new_password"
+               matInput 
+               [style.width.%]="94" 
+               [type]="newPasswdCredentialsService.is_visible()? 'text' : 'password'" 
+               ngModel  
+               required
+               placeholder="Give a New Password">
+               <i (click)="newPasswdCredentialsService.toggle_visibility()" class="material-icons">{{newPasswdCredentialsService.get_icon_visibility()}}</i>
+            </div>
+          </mat-form-field>
+        </span>
+
+      </ng-template>
+
+    </app-html-components>
+    <button type="submit" name="credentials_submit_btn" style="width: 100%;margin-top: 2%" class="col-md-12 btn btn-primary btn-lg"  mat-raised-button>Submit</button>
+
+  </form>
+</mat-card>

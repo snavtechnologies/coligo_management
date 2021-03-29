@@ -1,0 +1,30 @@
+<div class="modal fade" id="lockscreen_popup" role="dialog" tabindex='-1' data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div style="background-color:#E0E0E0;" class="modal-body">
+          <div class="page-header login-page header-filter" filter-color="black" style="background-size: cover; background-position: top center;">
+            <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+            <div class="container"><div *ngIf="!is_loading" style="height:7px;"></div>
+            <div class="col-md-4 ml-auto mr-auto">
+              <mat-progress-bar  color="primary" *ngIf="is_loading" mode="indeterminate"></mat-progress-bar>
+            </div>
+        
+              <!-- re-usable login form -->
+            <app-login-form [login_form_ui_data]="login_form_ui_data_to_send" (login_event)= "onLogin($event)"></app-login-form>
+              <!-- re-usable login form -->
+              
+            </div>
+          </div>   
+          <footer class="footer ">
+            <div class="container">
+              <div style="float: right;" class="copyright">
+                &copy;
+                  {{test | date: 'yyyy'}},
+                <a href="https://www.navtechnologies.in" target="_blank">Powered by sNav Technologies Pvt. Ltd.</a>
+              </div>
+            </div>
+          </footer>   
+      </div>
+    </div>
+  </div>
+</div>

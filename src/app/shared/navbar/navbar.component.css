@@ -1,0 +1,16 @@
+.logout_img {
+color: darkgrey;
+}
+
+.logout_dropdown:hover   {
+  background-color: #E75D59;;
+  color: #FFFFFF;
+}
+
+.logout_btn {
+  background:none;
+  border:none;
+  color:#FFF;
+  font-family:Verdana, Geneva, sans-serif;
+  cursor:pointer;
+}

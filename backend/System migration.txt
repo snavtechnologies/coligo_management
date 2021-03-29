@@ -1,0 +1,10 @@
+When setting MEAN stack in new system or new server, make sure to add these things
+
+1. . env file credentails - env files to connect mysql via node
+2. Apache environment file credentails (httpd conf in windows) and (. /etc/apache2/sites-available/000-default.conf in linux) - env files to connect mysql via php
+3. mysql_dbs.js file credentails - file to connect multiple db using node
+
+NOTE::::
+Multiple db functions in db_all.php is getting connected via simple PDO connection with statically coded hostname, username and password. This needs to be chnaged to a function call to a class that returns the connection credentails upon call. Currently all the external dbs are expected to have same username , hostname and password of default db and is hard coded from the apache env file itself.
+
+There is a else block to be removed in  sequelize file while hosting..also else should be removed in get_default_fb function in common_functions.js

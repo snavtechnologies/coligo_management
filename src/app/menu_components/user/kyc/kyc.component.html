@@ -1,0 +1,240 @@
+
+<app-tab-layout [tab_layout_ui_data_to_receive]="tab_layout_ui_data_to_send">
+    <ng-template>
+        
+          <div class="tab-pane active" id="link1" >
+            <div class="row">
+                <div class="col-md-4">
+                        <p>
+                        <mat-button-toggle-group value="1" style = "background-color: whitesmoke;margin-left:4%;" name="fontStyle" aria-label="Font Style">
+                                <mat-button-toggle value="1" (change)="onToggle($event.value, 0)"><b>Viekkw/Edit Customer</b></mat-button-toggle>
+                                <mat-button-toggle value="0" (change)="onToggle($event.value, 0)"><b>Register Customer</b></mat-button-toggle>
+                                
+                            </mat-button-toggle-group>  
+                        </p>
+                </div>
+                <div *ngIf="switch_tab == 1" class="col-md-4 ml-auto mr-auto">
+                       
+                 <app-search-box [search_box]="search_box" (fn_on_search)= "fn_on_search($event)"></app-search-box>
+
+                </div>
+                <div *ngIf="switch_tab == 1" class="col-md-1 ml-auto mr-auto" >
+                       
+                    <span class="kyc_image">
+                            <img ngClass="kyc_reg_image" alt= "User image here" src="http://localhost/coligo_management_suite/backend/images/{{cus_image}}"  height="100px" width="100px">
+                        </span> <!--<span class="kyc_image">                                  
+                            <img   ngClass="kyc_reg_image" alt= "User image here" src="../../../../assets/kyc_images/{{cus_sign}}"  height="50px" width="100px">              
+                        </span>-->
+                        </div>
+               </div>
+            <form [formGroup]="registrationForm" (ngSubmit)="form_submit(formDirective)" #formDirective="ngForm" [ngStyle] = "{'background-color':this.color}">        
+                <app-html-components [html_data_to_pass] = "kyc_mem_reg_html_elements" [form_data]="this.registrationForm"  (html_events)= "get_html_events($event)" >
+                    <ng-template #standardTemplate let-item>
+                    <!-- custom templates here -->
+
+                        <div>
+                                <span *ngIf="item=='kyc_reg_custom_element_1'">
+                                            <div class="input-group kyc_reg_date_group">
+                                                    <div class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                            <i class="material-icons">date_range</i>
+                                                                </span>                  
+                                                    </div>
+                                                    <input required="false" readonly="true" type="text" class="form-control kyc_reg_date" name="kyc_reg_date" formControlName="kyc_reg_date">
+                                            </div>
+                                </span>
+                                
+                                <span *ngIf="item=='kyc_reg_custom_element_id_1'">
+                                    <div class="input-group kyc_reg_id_1_select_group">
+                                <div class="input-group-prepend">
+                                            <span class="kyc_reg_id_select">
+                                            <app-html-components [html_data_to_pass] = "kyc_reg_custom_element_id_1_select_dropdown_data" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                                            </span>                  
+                                </div>
+                                <app-html-components *ngIf="this.registrationForm.get('kyc_reg_id_1_select_dropdown').value === '3'" [html_data_to_pass] = "kyc_reg_custom_element_id_1_select_value_data_extra" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                                <app-html-components [html_data_to_pass] = "kyc_reg_custom_element_id_1_select_value_data" [form_data]="this.registrationForm"  (html_events)= "get_html_events_custom($event)"></app-html-components>
+                            </div>
+                        </span>
+                                
+                                <span *ngIf="item=='kyc_reg_custom_element_id_2'">
+                                    <div class="input-group kyc_reg_id_2_select_group">
+                                <div class="input-group-prepend">
+                                            <span class="kyc_reg_id_select">
+                                            <app-html-components [html_data_to_pass] = "kyc_reg_custom_element_id_2_select_dropdown_data" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                                            </span>                  
+                                </div>
+                                <app-html-components *ngIf="this.registrationForm.get('kyc_reg_id_2_select_dropdown').value === '3'" [html_data_to_pass] = "kyc_reg_custom_element_id_2_select_value_data_extra" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                                <app-html-components [html_data_to_pass] = "kyc_reg_custom_element_id_2_select_value_data" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                            </div>
+                        </span>
+                                
+                                <span *ngIf="item=='kyc_reg_custom_dob'">
+                                    <mat-form-field>
+                    <div style="margin-top: 10px">
+                            <input placeholder="DD/MM/YYYY" class="date_mask"  formControlName="kyc_reg_dob"  matInput required="true" type="text" (blur)="dobcheck()" >
+                    </div>   </mat-form-field>
+                    </span>
+                                <span *ngIf="item=='kyc_reg_custom_element_4'">
+                                            <div class="input-group kyc_reg_tel_type__select_group">
+                                        <div class="input-group-prepend">
+                                                    <span class="kyc_reg_tel_type_select">
+                                                    <app-html-components [html_data_to_pass] = "kyc_reg_custom_element_4_select_dropdown_data" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                                                    </span>                  
+                                        </div>
+                                        <app-html-components [html_data_to_pass] = "kyc_reg_custom_element_4_select_value_data" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                                    </div>
+                                 
+                                </span>
+                                
+                                <span *ngIf="item=='kyc_reg_custom_element_5'">
+                                            <div class="input-group kyc_reg_tel_type__select_group">
+                                        <div class="input-group-prepend">
+                                                    <span class="kyc_reg_tel_type_select">
+                                                    <app-html-components [html_data_to_pass] = "kyc_reg_custom_element_5_select_dropdown_data" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                                                    </span>                  
+                                        </div>
+                                        <app-html-components [html_data_to_pass] = "kyc_reg_custom_element_5_select_value_data" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                                    </div>
+                                </span>
+                                
+                                <span *ngIf="item=='kyc_reg_custom_element_6'">
+                                    <div class="input-group kyc_reg_tel_type__select_group">
+                                        <div class="input-group-prepend">
+                                                    <span class="kyc_reg_tel_type_select">
+                                                    <app-html-components [html_data_to_pass] = "kyc_reg_custom_element_6_select_dropdown_data" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                                                    </span>                  
+                                        </div>
+                                        <app-html-components [html_data_to_pass] = "kyc_reg_custom_element_6_select_value_data" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                                    </div>
+                                </span>
+                                <span *ngIf="item=='share_details' && switch_tab == 0">
+                                   <mat-card>
+                                    <div>
+                                        
+                                                <span>
+                                                <app-html-components [html_data_to_pass] = "share_details_html_elements" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"> </app-html-components>  
+                                                    </span>
+                                                    <div class="col-md-3" style="margin-left:20px"><b>Accounts</b>
+                                                            <mat-form-field class="margin">
+                                                                    <mat-select formControlName="kyc_reg_accounts" placeholder="Select Item"  matInput required="true">
+                                                                        <mat-option [value] ="ac_id"> {{account_name}}</mat-option>
+                                                                    <mat-option *ngFor = "let data of bank_data index as i" [value] ="data.id">{{data.account_name}}</mat-option>
+                                                               
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                    </div>
+                                                             
+                                                              
+                                    </div> 
+                                </mat-card>
+                            </span>
+                            <!-- <span *ngIf="item=='share_details' && switch_tab== '0'">
+                                   
+                                <mat-card>
+                                    <app-html-components [html_data_to_pass] = "share_details_html_elements" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"> 
+                                                 <ng-template #standardTemplate let-item>
+                                                <span *ngIf="item=='account_list'">
+                                                <div style="margin-left:20px; margin-top: 10px;">
+                                                        <mat-form-field class="margin">
+                                                                <mat-select formControlName="kyc_reg_accounts" placeholder="Select Item"  matInput required="true">
+                                                                    <mat-option [value] ="ac_id"> {{account_name}}</mat-option>
+                                                                    <mat-option *ngFor = "let data of bank_data index as i" [value] ="data.id">{{data.account_name}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                </div>
+                                            </span>   
+                                        </ng-template>  
+                                        </app-html-components>      
+                                                          
+                                    </mat-card> 
+                        </span> -->
+                        
+                                <span *ngIf="item=='kyc_reg_custom_element_7'">        
+                                    <app-html-components [html_data_to_pass] = "kyc_reg_custom_element_7_present_address" [form_data]="this.registrationForm" (html_events)= "get_html_events_custom($event)"></app-html-components>
+                                    <label style="margin-left: 20px;" class="form-check-label">
+                                            <input (change)="give_same_address()" class="form-check-input" type="checkbox" value=""> <span style="color: lightcoral">Present address same as permanent address</span>
+                                            <span class="form-check-sign">
+                                            <span class="check"></span>
+                                            </span>
+                                    </label> 
+                                </span>
+                                <span *ngIf="item=='kyc_reg_custom_element_area'"> 
+                                        <div style="margin-top: 10px">  
+                                        <mat-form-field class="margin">
+                                                <mat-select formControlName="kyc_reg_area" placeholder="Select Area"  matInput required="false" (selectionChange)= "get_pincode_details()">
+                                                    <mat-option *ngFor = "let pinData of pincode_details index as i" [value]="i+'~'+pinData.Name">{{pinData.Name}} </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                    </div>
+                                    </span>
+                                    <span *ngIf="item=='kyc_reg_custom_element_area1'"> 
+                                            <div style="margin-top: 10px">  
+                                            <mat-form-field class="margin">
+                                                    <mat-select formControlName="kyc_reg_area_present" placeholder="Select Area"  matInput required="false" (selectionChange)= "get_pincode_details_present()">
+                                                        <mat-option *ngFor = "let pinData of pincode_details index as i" [value]="i+'~'+pinData.Name">{{pinData.Name}} </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                        </div>
+                                        </span>
+                                      </div>
+                                      
+                                                      
+
+                    <!-- custom templates here     -->
+                    </ng-template>
+                </app-html-components>
+                <button style="float: right" type="button" (click)="find_invalid()" class="btn"><b>Validate Form</b></button>
+                <button style="width: 100%;margin-top: 2%" class="col-md-12 btn btn-primary btn-lg" [disabled]="!registrationForm.valid" mat-raised-button type="submit" >Submit Information</button>   
+
+                <!-- This is just to prevent an angular warning bug. prevent_warning control should also be added in formbuilder class -->
+                <input [hidden]="true" required="false" formControlName="prevent_warning">
+            </form>
+        </div>
+
+        <div class="tab-pane" id="link2">
+                <app-table [table_data] = "table_data_to_send">
+                     
+                        <ng-template>
+             
+              <tr *ngFor = "let d of customerName index as i"><td>{{i+1}}</td>
+                                    <td><button type="button" (click)="send_tab(1,d.id)" class="btn btn-sm">View</button> <br>
+                                    <button type="button" (click)="send_tab(2,d.id)" class="btn btn-sm">Send SMS</button><br>
+
+                                    <button type="button" (click)="send_tab(3,d.id)" class="btn btn-sm">Send Email</button>
+
+                                    <button type="button" (click)="print_share_certificate(d.shares,d.cu_name,d.id)" class="btn btn-sm">Share Certificate</button></td>
+                                            
+                                    <td>{{d.date}}</td> <td>{{d.branch_name}}</td> <td>{{d.id}}</td> <td>{{d.cus_first_name+' '}}{{d.cus_middle_name+' '}}{{ d.cus_last_name}}</td> 
+                                    <td>{{d.address_2}}</td> <td>{{d.address_1}}</td> <td>{{d.email}}</td> <td>{{d.contact1_value}}</td> <td>{{d.contact2_value}}</td> 
+                                    <td>{{d.dob}}</td> <td>{{d.nominee_name}}</td> <td>{{d.pan_card}}</td> <td>{{d.bank_name}}{{d.bank_ifsc}}{{d.bank_branch}}</td> <td>aadhar: {{d.aadhar}}</td>
+                                </tr>
+                                
+                                  
+                            </ng-template> 
+                        </app-table>   
+        </div>
+        <div class="tab-pane" id="link3">
+                <div class="row">
+                        <div class="form-group col-md-5" >
+                       <mat-card> <form>        
+                             <app-html-components [html_data_to_pass] = "send_sms_html_elements" [form_data]="this.send_sms"  (html_events)= "get_html_events($event)" >
+                    </app-html-components>
+                    <button class="btn btn-primary">SEND SMS</button>
+                    </form>
+                 </mat-card> 
+                        </div>
+                        <div class="form-group col-md-7" >
+                         <mat-card><form >        
+                             <app-html-components [html_data_to_pass] = "send_email_html_elements" [form_data]="this.send_email"  (html_events)= "get_html_events($event)" >
+                    </app-html-components>
+                    <button class="btn btn-primary">SEND Email</button>
+                    </form>
+                 </mat-card> 
+                        </div>
+                     </div>
+        </div>
+        
+    </ng-template>
+</app-tab-layout>
+
+              

@@ -1,0 +1,42 @@
+<mat-card>
+<span *ngIf="table_data.minmax.need_minmax">
+  <small><mat-label>Search between range</mat-label></small>
+  <table style="border: 3px solid #DFDFDF;" cellspacing="5" cellpadding="5">
+    <tbody><tr>   
+        <td>
+        <div class="styled-select slate">
+        <select [id]="minmax_select_id" (change)="setminmax();" class="form-control">
+        <option *ngFor="let element of table_data.minmax.columns_def" [value]="element.index"> {{element.name}} </option> 
+        </select>
+        </div>
+        </td> &nbsp;
+        <td><input type="text" [id]="min11_id" placeholder="Enter Minimum Limit" class="form-control min_max" ></td>
+        <td><input type="text" [id]="max11_id" placeholder="Enter Maximum Limit" class="form-control min_max"></td>
+        </tr>
+    </tbody>
+  </table>
+  <br>
+  <mat-divider></mat-divider><br>
+</span>
+<span *ngIf="table_data.excel.need_export_to_excel" style="float: right">
+  <a style="display: inline-block;" href="javascript:void(0)" class="btn btn-sm btn-primary " (click)="export()" ><i class="fa fa-table"></i> Export to Excel</a>
+ </span> <br>
+
+<div class="col-md-12">
+  <table width="100%" [id]="table_data.table.table_id" class="dt_class table table-bordered table-hover"> 
+  <thead style="background-color: #DFE2FF" *ngIf="table_data.table.need_header" id="tabid">
+    <tr>
+      <th *ngFor="let element of each_heading_result ; let i = index" [attr.data-index]="i">{{element}}<br><span *ngIf="searchbox[i]==1"> <input #customer_search (keyup)="do_customer_search(customer_search)" type="text" [id]="table_data.table.table_id + '_' + i" class="customer_search form-control" placeholder="search..." style="width: 100px"></span></th>
+    </tr>
+  </thead>
+  <tbody style="background-color: #F2F4FE" id="tbdy">
+      <ng-container *ngTemplateOutlet="layoutTemplate;"></ng-container>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td *ngFor="let element of each_heading_result"></td>
+    </tr>
+  </tfoot>
+  </table>
+</div>
+</mat-card>
